@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const baseURL = 'http://localhost:8000/'
 
-Axios = axios.create({
+const Axios = axios.create({
     baseURL: baseURL
 })
 
