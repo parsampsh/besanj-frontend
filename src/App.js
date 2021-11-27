@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import IndexPage from './pages/Index'
 import LoginPage from './pages/Login'
