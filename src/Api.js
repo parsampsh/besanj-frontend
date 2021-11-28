@@ -6,8 +6,6 @@ const Axios = axios.create({
     baseURL: baseURL
 })
 
-Axios.defaults.withCredentials = true
-
 Axios.interceptors.request.use(function (config) {
     let token = window.localStorage.getItem('token')
     if (token !== null) {
@@ -18,5 +16,9 @@ Axios.interceptors.request.use(function (config) {
   }, function (error) {
     return Promise.reject(error);
 });
+
+export function check_auth() {
+    return Axios.get('account/whoami/')
+}
 
 export default Axios
