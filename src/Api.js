@@ -8,4 +8,15 @@ const Axios = axios.create({
 
 Axios.defaults.withCredentials = true
 
+Axios.interceptors.request.use(function (config) {
+    let token = window.localStorage.getItem('token')
+    if (token !== null) {
+        config.headers['Token'] = token
+    }
+
+    return config;
+  }, function (error) {
+    return Promise.reject(error);
+});
+
 export default Axios
