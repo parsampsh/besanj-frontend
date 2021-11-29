@@ -32,8 +32,10 @@ class App extends React.Component {
   }
 
   logoutHandler() {
-    window.localStorage.removeItem('token')
-    this.setIsAuth(false)
+    if (window.confirm('Are you sure you want logout?')) {
+      window.localStorage.removeItem('token')
+      this.setIsAuth(false)
+    }
   }
 
   render() {
