@@ -17,8 +17,14 @@ Axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-export function check_auth() {
-    return Axios.get('account/whoami/')
+export function check_auth(callback_true, callback_false) {
+    Axios.get('account/whoami/').then(res => {
+        if (res.status === 200) {
+            callback_true()
+        } else {
+            callback_false()
+        }
+    }).catch(error => { callback_false() })
 }
 
 export default Axios

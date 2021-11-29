@@ -20,9 +20,12 @@ export default class LoginPage extends React.Component {
     }
 
     componentDidMount() {
-        check_auth().then(res => {
-            this.setState({done: true})
-        }).catch(error => {})
+        check_auth(
+            () => {
+                this.setState({done: true})
+            },
+            () => {}
+        )
     }
 
     usernameChangeHandler(event) {
@@ -73,6 +76,7 @@ export default class LoginPage extends React.Component {
 
     render() {
         if (this.state.done) {
+            this.props.parentHandler(true)
             return <Navigate to='/' />;
         }
 
