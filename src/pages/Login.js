@@ -104,9 +104,9 @@ export default class LoginPage extends React.Component {
                 Password:
                 <input required value={this.state.password} type='password' onChange={this.passwordChangeHandler} className='form-control' placeholder='Enter your password' />
 
-                <center>
-                    <input type='submit' className='btn btn-success mt-2' value={this.state.isLoading ? 'Login...' : 'Login'} />
-                </center>
+                <br />
+
+                <input type='submit' className='btn btn-success' value={this.state.isLoading ? 'Login...' : 'Login'} />
             </form>
         </div>
     }
