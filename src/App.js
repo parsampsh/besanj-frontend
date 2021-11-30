@@ -6,25 +6,40 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import IndexPage from './pages/Index'
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
-import { check_auth } from './Api'
+import Api, { check_auth } from './Api'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {isAuth: false}
+    this.state = {isAuth: false, username: '', email: ''}
 
     this.setIsAuth = this.setIsAuth.bind(this)
     this.logoutHandler = this.logoutHandler.bind(this)
   }
 
   setIsAuth(value) {
-      this.setState({isAuth: value})
+      if (value === true) {
+        console.log('B')
+        Api.get('account/whoami/').then(res => {
+          console.log('C')
+          if (res.status === 200) {
+            this.setState({
+              isAuth: true,
+              username: res.data.user.username,
+              email: res.data.user.email
+            })
+          }
+        }).catch(error => {})
+      } else {
+        this.setState({isAuth: value})
+      }
   }
 
   componentDidMount() {
     check_auth(
         () => {
+            console.log('A')
             this.setIsAuth(true)
         },
         () => {}
@@ -42,8 +57,9 @@ class App extends React.Component {
     let nav_links = null
     if (this.state.isAuth) {
       nav_links = <ul>
+        <div>Welcome {this.state.username} ({this.state.email})</div>
         <li><Link to='/'>Home</Link></li>
-        <li><button onClick={this.logoutHandler} class='btn btn-danger'>Logout</button></li>
+        <li><button onClick={this.logoutHandler} className='btn btn-danger'>Logout</button></li>
       </ul>
     } else {
       nav_links = <ul>
