@@ -59,7 +59,7 @@ class App extends React.Component {
           {nav_links}
           <Routes>
             <Route exact path='/' element={<IndexPage />} />
-            <Route exact path='/register' element={<RegisterPage />} />
+            <Route exact path='/register' element={<RegisterPage parentHandler={this.setIsAuth} />} />
             <Route exact path='/login' element={<LoginPage parentHandler={this.setIsAuth} />} />
           </Routes>
         </Router>
