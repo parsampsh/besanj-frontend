@@ -66,8 +66,7 @@ export default class LoginPage extends React.Component {
             }
         }).catch(error => {
             if (error.response === undefined) {
-                this.setState({isLoading: false})
-                alert(error)
+                this.setState({isLoading: false, errors: [String(error)]})
             } else {
                 this.setState({isLoading: false, errors: ['Invalid username or password']})
             }
