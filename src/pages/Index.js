@@ -22,7 +22,10 @@ export default class IndexPage extends React.Component {
     loadPolls() {
         this.setState({isLoading: true})
 
-        Api.get('polls/').then(res => {
+        const queryParams = new URLSearchParams(window.location.search)
+        const page = queryParams.get('page')
+
+        Api.get('polls/?page=' + page).then(res => {
             if (res.status === 200) {
                 this.setState({polls: res.data, error: null, isLoading: false})
             } else {
