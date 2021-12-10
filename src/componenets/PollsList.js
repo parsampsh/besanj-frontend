@@ -2,11 +2,25 @@ import React from 'react'
 import PollItem from './PollItem'
 
 class PollsList extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            search: (new URLSearchParams(window.location.search)).get('search')
+        }
+
+        this.searchChangeHandler = this.searchChangeHandler.bind(this)
+    }
+
+    searchChangeHandler(event) {
+        this.setState({search: event.target.value})
+    }
+
     render() {
         let pagesButtons = []
         const currentPage = parseInt(this.props.polls.current_page)
 
-        const search = (new URLSearchParams(window.location.search)).get('search')
+        const search = this.state.search
         let searchParam = ''
         if (search != null) {
             searchParam = '&search=' + search
@@ -26,6 +40,12 @@ class PollsList extends React.Component {
         }
 
         return <div>
+            <form className='form-group'>
+                Search:
+                <input onChange={this.searchChangeHandler} type='text' name='search' value={this.state.search} className='form-control' />
+                <input type='submit' value='Search' className='btn btn-primary m-1' />
+            </form>
+            <br />
             {pagesButtons}
             <hr />
 
