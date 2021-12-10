@@ -56,6 +56,7 @@ export default class IndexPage extends React.Component {
         }
         return <div className='container'>
             <h2>Home</h2>
+            <hr />
 
             {body}
         </div>
