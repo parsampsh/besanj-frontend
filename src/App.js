@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import IndexPage from './pages/Index'
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
+import UserPage from './pages/User'
 import Api, { check_auth } from './Api'
 
 class App extends React.Component {
@@ -20,9 +21,7 @@ class App extends React.Component {
 
   setIsAuth(value) {
       if (value === true) {
-        console.log('B')
         Api.get('account/whoami/').then(res => {
-          console.log('C')
           if (res.status === 200) {
             this.setState({
               isAuth: true,
@@ -39,7 +38,6 @@ class App extends React.Component {
   componentDidMount() {
     check_auth(
         () => {
-            console.log('A')
             this.setIsAuth(true)
         },
         () => {}
@@ -77,6 +75,7 @@ class App extends React.Component {
             <Route exact path='/' element={<IndexPage />} />
             <Route exact path='/register' element={<RegisterPage parentHandler={this.setIsAuth} />} />
             <Route exact path='/login' element={<LoginPage parentHandler={this.setIsAuth} />} />
+            <Route path='/user/:id/:name' element={<UserPage />} />
           </Routes>
         </Router>
       </div>

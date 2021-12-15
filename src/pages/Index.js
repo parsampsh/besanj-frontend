@@ -31,6 +31,10 @@ export default class IndexPage extends React.Component {
             url = url + '&search=' + search
         }
 
+        if (this.userId !== undefined) {
+            url += '&user_id=' + this.userId
+        }
+
         Api.get(url).then(res => {
             if (res.status === 200) {
                 this.setState({polls: res.data, error: null, isLoading: false})
@@ -39,7 +43,11 @@ export default class IndexPage extends React.Component {
             }
         }).catch(error => {
             if (error.response !== undefined) {
-                this.setState({error: String(error) + error.response.status, isLoading: false})
+                if (error.response.status === 404) {
+                    this.setState({error: 'User not found', isLoading: false})
+                } else {
+                    this.setState({error: String(error), isLoading: false})
+                }
             } else {
                 this.setState({error: error.response.data.error, isLoading: false})
             }
