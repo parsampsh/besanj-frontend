@@ -25,6 +25,7 @@ class App extends React.Component {
           if (res.status === 200) {
             this.setState({
               isAuth: true,
+              userId: res.data.user.id,
               username: res.data.user.username,
               email: res.data.user.email
             })
@@ -58,6 +59,7 @@ class App extends React.Component {
         <div>Welcome {this.state.username} ({this.state.email})</div>
         <li><Link to='/'>Home</Link></li>
         <li><button onClick={this.logoutHandler} className='btn btn-danger'>Logout</button></li>
+        <li><Link to={'/user/' + this.state.userId + '/' + this.state.username}><button className='btn btn-primary'>My Polls</button></Link></li>
       </ul>
     } else {
       nav_links = <ul>
