@@ -15,9 +15,9 @@ class PollItem extends React.Component {
             <div>Created by: <Link to={'/user/' + poll.user.id + '/' + poll.user.username}>{poll.user.username}</Link></div>
             <div>
                 {poll.choices.map((choice, i) => isAuth ? <div>
-                    <input type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title}
+                    <input type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
                 </div> : <div>
-                    <input disabled type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title}
+                    <input disabled type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
                 </div>)}
             </div>
             <hr />
