@@ -29,8 +29,12 @@ class App extends React.Component {
               username: res.data.user.username,
               email: res.data.user.email
             })
+          } else {
+            window.localStorage.removeItem('token')
           }
-        }).catch(error => {})
+        }).catch(error => {
+          window.localStorage.removeItem('token')
+        })
       } else {
         this.setState({isAuth: value})
       }

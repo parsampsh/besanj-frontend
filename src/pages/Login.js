@@ -39,7 +39,6 @@ export default class LoginPage extends React.Component {
     submitHandler(event) {
         event.preventDefault()
 
-        // TODO : send request to the API
         this.setState({isLoading: true})
 
         var data = {}
