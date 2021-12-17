@@ -40,7 +40,6 @@ class PollItem extends React.Component {
     render() {
         const isAuth = localStorage.getItem('token') !== null
         const poll = this.state.poll
-        console.log(isAuth)
         return <div>
             <h5>{poll.title}</h5>
             <p>{poll.description}</p>
