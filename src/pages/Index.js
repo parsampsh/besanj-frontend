@@ -25,7 +25,11 @@ export default class IndexPage extends React.Component {
         const queryParams = new URLSearchParams(window.location.search)
         const page = queryParams.get('page')
         const search = queryParams.get('search')
+
         let url = 'polls/?page=' + page
+        if (this.baseUrl !== undefined) {
+            url = this.baseUrl + '?page=' + page
+        }
 
         if (search != null) {
             url = url + '&search=' + search
@@ -72,7 +76,7 @@ export default class IndexPage extends React.Component {
             }
         }
         return <div className='container'>
-            <h2>Home</h2>
+            <h2>{this.mainTitle !== undefined ? this.mainTitle : 'Home'}</h2>
             <hr />
 
             {body}

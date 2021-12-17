@@ -7,6 +7,7 @@ import IndexPage from './pages/Index'
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import UserPage from './pages/User'
+import MyVotesPage from './pages/MyVotes'
 import Api, { check_auth } from './Api'
 
 class App extends React.Component {
@@ -64,6 +65,7 @@ class App extends React.Component {
         <li><Link to='/'>Home</Link></li>
         <li><button onClick={this.logoutHandler} className='btn btn-danger'>Logout</button></li>
         <li><Link to={'/user/' + this.state.userId + '/' + this.state.username}><button className='btn btn-primary'>My Polls</button></Link></li>
+        <li><Link to={'/my-votes'}><button className='btn btn-success'>My Votes</button></Link></li>
       </ul>
     } else {
       nav_links = <ul>
@@ -81,6 +83,7 @@ class App extends React.Component {
             <Route exact path='/' element={<IndexPage />} />
             <Route exact path='/register' element={<RegisterPage parentHandler={this.setIsAuth} />} />
             <Route exact path='/login' element={<LoginPage parentHandler={this.setIsAuth} />} />
+            <Route exact path='/my-votes' element={<MyVotesPage />} />
             <Route path='/user/:id/:name' element={<UserPage />} />
           </Routes>
         </Router>
