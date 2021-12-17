@@ -6,6 +6,7 @@ class MyVotesPage extends IndexPage {
 
         this.baseUrl = 'polls/my_votes/'
         this.mainTitle = 'My Votes'
+        this.requireAuth = true
     }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
-import Api from '../Api'
+import Api, { check_auth } from '../Api'
 import PollsList from '../componenets/PollsList'
+import { Navigate } from 'react-router-dom'
 
 export default class IndexPage extends React.Component {
     constructor(props) {
@@ -16,7 +17,18 @@ export default class IndexPage extends React.Component {
     }
 
     componentDidMount() {
-        this.loadPolls()
+        if (this.requireAuth !== undefined && this.requireAuth === true) {
+            check_auth(
+                () => {
+                    this.loadPolls()
+                },
+                () => {
+                    this.setState({doRedirect: true})
+                }
+            )
+        } else {
+            this.loadPolls()
+        }
     }
 
     loadPolls() {
@@ -61,6 +73,10 @@ export default class IndexPage extends React.Component {
     }
 
     render() {
+        if (this.state.doRedirect !== undefined && this.state.doRedirect) {
+            return <Navigate to='/' />;
+        }
+
         let body = {}
         if (this.state.isLoading) {
             body = <div>
