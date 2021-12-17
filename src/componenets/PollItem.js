@@ -9,10 +9,12 @@ class PollItem extends React.Component {
         this.state = {
             isLoading: false,
             error: null,
-            poll: props.poll
+            poll: props.poll,
+            removingVoteLoading: false
         }
 
         this.chooseHandler = this.chooseHandler.bind(this)
+        this.voteRemoveHandler = this.voteRemoveHandler.bind(this)
     }
 
     chooseHandler(event) {
@@ -37,9 +39,16 @@ class PollItem extends React.Component {
         })
     }
 
+    voteRemoveHandler(event) {
+        this.setState({removingVoteLoading: true})
+        this.chooseHandler({target: {value: this.state.poll.selected_choice}})
+        this.setState({removingVoteLoading: false})
+    }
+
     render() {
         const isAuth = localStorage.getItem('token') !== null
         const poll = this.state.poll
+        let showRemoveVoteBtn = false
         return <div>
             <h5>{poll.title}</h5>
             <p>{poll.description}</p>
@@ -54,6 +63,7 @@ class PollItem extends React.Component {
                     {poll.choices.map((choice, i) => {
                         if (isAuth) {
                             if (poll.selected_choice !== undefined && poll.selected_choice === choice.id) {
+                                showRemoveVoteBtn = true
                                 return <div>
                                     <input defaultChecked type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
                                 </div>
@@ -69,6 +79,7 @@ class PollItem extends React.Component {
                         }
                     })}
                 </div>
+                {showRemoveVoteBtn ? <button onClick={this.voteRemoveHandler} className='btn btn-danger'>Remove vote{this.state.removingVoteLoading ? '...' : ''}</button> : ''}
             </div>
             <hr />
         </div>
