@@ -50,23 +50,25 @@ class PollItem extends React.Component {
             <div>
                 {this.state.error !== null ? <div className='alert alert-danger'>{this.state.error}</div> : ''}
                 {this.state.isLoading ? 'Choosing...' : ''}
-                {poll.choices.map((choice, i) => {
-                    if (isAuth) {
-                        if (poll.selected_choice !== undefined && poll.selected_choice == choice.id) {
-                            return <div>
-                                <input checked onChange={this.chooseHandler} type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
-                            </div>
+                <div onChange={this.chooseHandler}>
+                    {poll.choices.map((choice, i) => {
+                        if (isAuth) {
+                            if (poll.selected_choice !== undefined && poll.selected_choice === choice.id) {
+                                return <div>
+                                    <input defaultChecked type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
+                                </div>
+                            } else {
+                                return <div>
+                                    <input type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
+                                </div>
+                            }
                         } else {
                             return <div>
-                                <input onChange={this.chooseHandler} type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
+                                <input disabled type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
                             </div>
                         }
-                    } else {
-                        return <div>
-                            <input onChange={this.chooseHandler} disabled type='radio' name={'poll' + poll.id} key={i} value={choice.id} /> {choice.title} | {choice.votes_percent}% ({choice.votes_count} votes)
-                        </div>
-                    }
-            })}
+                    })}
+                </div>
             </div>
             <hr />
         </div>
