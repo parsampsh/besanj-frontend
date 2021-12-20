@@ -10,11 +10,14 @@ class PollItem extends React.Component {
             isLoading: false,
             error: null,
             poll: props.poll,
-            removingVoteLoading: false
+            removingVoteLoading: false,
+            deletingPollLoading: false,
+            isDeleted: false,
         }
 
         this.chooseHandler = this.chooseHandler.bind(this)
         this.voteRemoveHandler = this.voteRemoveHandler.bind(this)
+        this.pollDeleteHandler = this.pollDeleteHandler.bind(this)
     }
 
     chooseHandler(event) {
@@ -45,7 +48,35 @@ class PollItem extends React.Component {
         this.setState({removingVoteLoading: false})
     }
 
+    pollDeleteHandler(event) {
+        if (!window.confirm('Are you sure about deleting this poll?')) {
+            return
+        }
+
+        this.setState({deletingPollLoading: true})
+
+        Api.post('polls/delete/', {
+            'poll_id': this.state.poll.id,
+        }).then(res => {
+            if (res.status === 200) {
+                this.setState({deletingPollLoading: false, error: null, isDeleted: true})
+            } else {
+                this.setState({deletingPollLoading: false, error: 'Unexpected error: ' + res.status})
+            }
+        }).catch(error => {
+            if (error.response !== undefined) {
+                this.setState({deletingPollLoading: false, error: 'Unexpected error: ' + error.response.status})
+            } else {
+                this.setState({deletingPollLoading: false, error: String(error)})
+            }
+        })
+    }
+
     render() {
+        if (this.state.isDeleted) {
+            return <div></div>
+        }
+
         const isAuth = localStorage.getItem('token') !== null
         const poll = this.state.poll
         let showRemoveVoteBtn = false
@@ -79,7 +110,8 @@ class PollItem extends React.Component {
                         }
                     })}
                 </div>
-                {showRemoveVoteBtn ? <button onClick={this.voteRemoveHandler} className='btn btn-danger'>Remove vote{this.state.removingVoteLoading ? '...' : ''}</button> : ''}
+                {showRemoveVoteBtn ? <button onClick={this.voteRemoveHandler} className='btn btn-warning'>Remove vote{this.state.removingVoteLoading ? '...' : ''}</button> : ''}
+                {poll.belongs_to_you ? <button onClick={this.pollDeleteHandler} className='btn btn-danger m-1'>Delete the poll{this.state.deletingPollLoading ? '...' : ''}</button> : ''}
             </div>
             <hr />
         </div>
