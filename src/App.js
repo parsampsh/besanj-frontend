@@ -8,6 +8,7 @@ import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import UserPage from './pages/User'
 import MyVotesPage from './pages/MyVotes'
+import SinglePollPage from './pages/SinglePoll'
 import Api, { check_auth } from './Api'
 
 class App extends React.Component {
@@ -85,6 +86,7 @@ class App extends React.Component {
             <Route exact path='/login' element={<LoginPage parentHandler={this.setIsAuth} />} />
             <Route exact path='/my-votes' element={<MyVotesPage />} />
             <Route path='/user/:id/:name' element={<UserPage />} />
+            <Route path='/poll/:id' element={<SinglePollPage />} />
           </Routes>
         </Router>
       </div>

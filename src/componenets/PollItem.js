@@ -81,7 +81,7 @@ class PollItem extends React.Component {
         const poll = this.state.poll
         let showRemoveVoteBtn = false
         return <div>
-            <h5>{poll.title}</h5>
+            <h5>{this.props.noLink !== undefined ? poll.title : <Link to={'/poll/' + poll.id}>{poll.title}</Link>}</h5>
             <p>{poll.description}</p>
             <span className='badge bg-primary'>Publish date: {poll.created_at}</span>
             {poll.is_published ? null : <span className='badge bg-danger'>Unpublished</span>}
