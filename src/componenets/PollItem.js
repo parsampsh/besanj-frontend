@@ -35,7 +35,11 @@ class PollItem extends React.Component {
             }
         }).catch(error => {
             if (error.response !== undefined) {
-                this.setState({isLoading: false, error: 'Unexpected error: ' + error.response.status})
+                if (error.response.status === 403) {
+                    this.setState({isLoading: false, error: 'You cannot vote to this poll because it is not published yet'})
+                } else {
+                    this.setState({isLoading: false, error: 'Unexpected error: ' + error.response.status})
+                }
             } else {
                 this.setState({isLoading: false, error: String(error)})
             }
