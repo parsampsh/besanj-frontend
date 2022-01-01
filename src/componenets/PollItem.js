@@ -13,11 +13,13 @@ class PollItem extends React.Component {
             removingVoteLoading: false,
             deletingPollLoading: false,
             isDeleted: false,
+            deleteMessageIsClosed: false,
         }
 
         this.chooseHandler = this.chooseHandler.bind(this)
         this.voteRemoveHandler = this.voteRemoveHandler.bind(this)
         this.pollDeleteHandler = this.pollDeleteHandler.bind(this)
+        this.deleteMessageButtonHandler = this.deleteMessageButtonHandler.bind(this)
     }
 
     chooseHandler(event) {
@@ -76,9 +78,19 @@ class PollItem extends React.Component {
         })
     }
 
+    deleteMessageButtonHandler(event) {
+        this.setState({deleteMessageIsClosed: true})
+    }
+
     render() {
         if (this.state.isDeleted) {
-            return <div></div>
+            if (this.state.deleteMessageIsClosed) {
+                return <div></div>
+            }
+            return <div className='alert alert-danger'>
+                Poll "{this.state.poll.title}" was deleted
+                <button onClick={this.deleteMessageButtonHandler} className='btn btn-danger'>X</button>
+            </div>
         }
 
         const isAuth = localStorage.getItem('token') !== null
