@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import Api from '../Api'
 import PollItem from '../componenets/PollItem'
+import CommentsList from '../componenets/CommentsList'
 
 class SinglePollPage extends React.Component {
     constructor(props) {
@@ -45,7 +46,13 @@ class SinglePollPage extends React.Component {
             if (this.state.error !== null) {
                 body = <div className='alert alert-danger'>{this.state.error}</div>
             } else {
-                body = <PollItem poll={this.state.poll} noLink={true} />
+                body = <div>
+                    <PollItem poll={this.state.poll} noLink={true} />
+
+                    <hr />
+
+                    <CommentsList poll={this.state.poll} />
+                </div>
             }
         }
         return <div className='container'>
