@@ -1,6 +1,7 @@
 import React from 'react'
 import Api from '../Api'
 import CommentItem from '../componenets/CommentItem'
+import { generatePaginationButtons } from '../Pagination'
 
 class CommentsList extends React.Component {
     constructor(props) {
@@ -15,9 +16,15 @@ class CommentsList extends React.Component {
 
     componentDidMount() {
         if (this.props.comments !== undefined) {
+            let comments = this.props.comments
+            if (comments.comments === undefined) {
+                comments = {
+                    comments: comments
+                }
+            }
             this.setState({
                 isLoading: false,
-                comments: this.props.comments,
+                comments: comments,
             })
 
             return
@@ -26,7 +33,7 @@ class CommentsList extends React.Component {
         Api.get('/comments/poll_comments/?poll_id=' + this.props.poll.id).then(res => {
             this.setState({
                 isLoading: false,
-                comments: res.data.comments,
+                comments: res.data,
             })
         }).catch(error => {
             if (error.response === undefined) {
@@ -54,12 +61,21 @@ class CommentsList extends React.Component {
             </div>
         }
 
+        let pagesButtons = ''
+        if (this.state.comments.pages_count !== undefined) {
+            pagesButtons = generatePaginationButtons(this.state.comments)
+        }
+
         return <div>
             {this.props.comments !== undefined ? '' : <h4>Comments</h4>}
 
-            {this.state.comments.map((item, i) => {
+            {pagesButtons}
+
+            {this.state.comments.comments.map((item, i) => {
                 return <CommentItem comment={item} key={i} />
             })}
+
+            {pagesButtons}
         </div>
     }
 }
