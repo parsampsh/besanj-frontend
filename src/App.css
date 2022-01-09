@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.comment-item, .comment-item-replies {
+  border: solid 1px red !important;
+}
+
+.comment-item-user {
+  float: left;
+}
