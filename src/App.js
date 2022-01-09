@@ -7,6 +7,7 @@ import IndexPage from './pages/Index'
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import UserPage from './pages/User'
+import UserCommentsPage from './pages/UserComments'
 import MyVotesPage from './pages/MyVotes'
 import SinglePollPage from './pages/SinglePoll'
 import CreatePollPage from './pages/CreatePoll'
@@ -89,6 +90,7 @@ class App extends React.Component {
             <Route exact path='/my-votes' element={<MyVotesPage />} />
             <Route exact path='/create-poll' element={<CreatePollPage />} />
             <Route path='/user/:id/:name' element={<UserPage />} />
+            <Route path='/user-comments/:id/:name' element={<UserCommentsPage />} />
             <Route path='/poll/:id' element={<SinglePollPage />} />
           </Routes>
         </Router>
