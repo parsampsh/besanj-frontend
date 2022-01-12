@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Api from '../Api'
 import PollItem from '../componenets/PollItem'
 import CommentsList from '../componenets/CommentsList'
+import SendCommentForm from '../componenets/SendCommentForm'
 
 class SinglePollPage extends React.Component {
     constructor(props) {
@@ -14,7 +15,10 @@ class SinglePollPage extends React.Component {
             isLoading: true,
             error: null,
             poll: null,
+            refreshComments: 0,
         }
+
+        this.parentStateUpdator = this.parentStateUpdator.bind(this)
     }
 
     componentDidMount() {
@@ -37,8 +41,13 @@ class SinglePollPage extends React.Component {
         })
     }
 
+    parentStateUpdator() {
+        this.setState({refreshComments: this.state.refreshComments + 1})
+    }
+
     render() {
-        let body = '';
+        let body = ''
+        const isAuth = localStorage.getItem('token') !== null
 
         if (this.state.isLoading) {
             body = 'Loading...'
@@ -51,7 +60,9 @@ class SinglePollPage extends React.Component {
 
                     <hr />
 
-                    <CommentsList poll={this.state.poll} />
+                    {isAuth ? <SendCommentForm parentStateUpdator={this.parentStateUpdator} pollId={this.pollId} /> : ''}
+
+                    <CommentsList temp={this.state.refreshComments} poll={this.state.poll} />
                 </div>
             }
         }

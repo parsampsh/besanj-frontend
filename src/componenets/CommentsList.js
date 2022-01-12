@@ -12,9 +12,21 @@ class CommentsList extends React.Component {
             comments: [],
             error: null,
         }
+
+        this.loadComments = this.loadComments.bind(this)
     }
 
     componentDidMount() {
+        this.loadComments()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.temp < this.props.temp) {
+            this.loadComments()
+        }
+    }
+
+    loadComments() {
         if (this.props.comments !== undefined) {
             let comments = this.props.comments
             if (comments.comments === undefined) {
