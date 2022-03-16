@@ -14,6 +14,11 @@ class CommentsList extends React.Component {
         }
 
         this.loadComments = this.loadComments.bind(this)
+        this.parentStateUpdator = this.parentStateUpdator.bind(this)
+    }
+
+    parentStateUpdator() {
+        this.loadComments()
     }
 
     componentDidMount() {
@@ -84,7 +89,7 @@ class CommentsList extends React.Component {
             {pagesButtons}
 
             {this.state.comments.comments.map((item, i) => {
-                return <CommentItem comment={item} key={i} />
+                return <CommentItem parentStateUpdator={this.parentStateUpdator} comment={item} key={i} />
             })}
 
             {pagesButtons}

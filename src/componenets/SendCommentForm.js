@@ -26,9 +26,16 @@ export default class SendCommentForm extends React.Component {
 
         this.setState({isLoading: true})
 
+        let commentId = null
+
+        if (this.props.commentId !== undefined) {
+            commentId = this.props.commentId
+        }
+
         Api.post('/comments/send/', {
             poll_id: this.props.pollId,
             text: this.state.text,
+            parent_comment_id: commentId,
         }).then(res => {
             if (res.status === 201) {
                 this.setState({isLoading: false, error: null, success: true})
