@@ -11,6 +11,7 @@ import UserCommentsPage from './pages/UserComments'
 import MyVotesPage from './pages/MyVotes'
 import SinglePollPage from './pages/SinglePoll'
 import CreatePollPage from './pages/CreatePoll'
+import ResetPasswordPage from './pages/ResetPassword'
 import Api, { check_auth } from './Api'
 
 class App extends React.Component {
@@ -66,6 +67,7 @@ class App extends React.Component {
       nav_links = <ul>
         <div>Welcome {this.state.username} ({this.state.email})</div>
         <li><Link to='/'>Home</Link></li>
+	<li><Link to="/reset-password">Reset password</Link></li>
         <li><button onClick={this.logoutHandler} className='btn btn-danger'>Logout</button></li>
         <li><Link to={'/user/' + this.state.userId + '/' + this.state.username}><button className='btn btn-primary'>My Polls</button></Link></li>
         <li><Link to={'/create-poll'}><button className='btn btn-success'>New Poll</button></Link></li>
@@ -92,6 +94,7 @@ class App extends React.Component {
             <Route path='/user/:id/:name' element={<UserPage />} />
             <Route path='/user-comments/:id/:name' element={<UserCommentsPage />} />
             <Route path='/poll/:id' element={<SinglePollPage />} />
+            <Route path='/reset-password' element={<ResetPasswordPage />} />
           </Routes>
         </Router>
       </div>

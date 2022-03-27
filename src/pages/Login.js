@@ -1,6 +1,7 @@
 import React from 'react'
 import Api, { check_auth } from '../Api'
 import { Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default class LoginPage extends React.Component {
     constructor(props) {
@@ -106,6 +107,7 @@ export default class LoginPage extends React.Component {
 
                 <input type='submit' className='btn btn-success' value={this.state.isLoading ? 'Login...' : 'Login'} />
             </form>
+	    <Link to="/reset-password">Forgot password?</Link>
         </div>
     }
 }
