@@ -76,8 +76,6 @@ class CreatePollPage extends React.Component {
         choices.push(this.state.newChoice)
 
         this.setState({choices: choices, newChoice: ''})
-
-        //document.getElementsByTagName('input')[1].focus() // TODO : use REF instead
     }
 
     deleteChoiceHandler(event) {
@@ -85,7 +83,6 @@ class CreatePollPage extends React.Component {
         let choices = this.state.choices
         let newChoices = []
 
-        // TODO : use the correct way to pop an item fron array
         let x = 0
         while (x < choices.length) {
             if (x !== i) {
